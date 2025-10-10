@@ -1,0 +1,49 @@
+<div *ngIf="permisos && permisos.length > 0; else noData">
+    <table class="table" id="permisosTable">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope='col'>Nombre Empleado</th>
+                <th scope="col">Apellido Empleado</th>
+                <th scope="col">Tipo de Permiso</th>
+                <th scope="col">Fecha</th>
+                <th scope="col" class="text-center">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let permiso of permisos" [attr.data-id]="permiso.tipoPermiso.id">
+                <th scope="row">{{permiso.id}}</th>
+                <td>{{permiso.nombre}}</td>
+                <td>{{permiso.apellidos}}</td>
+                <td>{{permiso.tipoPermiso.descripcion}}</td>
+                <td>{{permiso.fecha | date:'shortDate'}}</td>
+                <td>
+                    <div class="d-flex justify-content-center gap-2">
+                        
+                        <!-- Botón Editar -->
+                        <button class="btn btn-primary btn-sm" title="Editar" aria-label="Editar"
+                            (click)="handleEdit(permiso)">
+                            <i class="fas fa-trash">Editar</i>
+                        </button>
+
+
+
+                        <!-- Botón Eliminar -->
+                        <button class="btn btn-danger btn-sm" title="Eliminar" aria-label="Eliminar"
+                            (click)="handleDelete(permiso.id)">
+                            <i class="fas fa-trash">Eliminar</i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>   
+    </table>
+</div>
+
+<ng-template #noData>
+    <div class="text-center py-4">
+        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+        <h5 class="text-muted">No se encontraron permisos</h5>
+    </div>
+</ng-template>
+

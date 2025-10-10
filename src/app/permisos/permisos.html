@@ -1,0 +1,18 @@
+<button type="button" class="btn btn-primary mb-3" (click)="addNewPermission()">
+  Nuevo
+</button>
+
+<app-modal #PermisoFormModal 
+  [modalId]="('PermisoFormModal')" 
+  [modalTitle]="permisoSeleccionado ? 'Editar Permiso' : 'Registrar Permiso'">
+  <div slot="body">
+    <app-permisos-form 
+      [permiso]="permisoSeleccionado" 
+      [tiposPermiso]="listaTiposPermiso$ | async"
+      (onSave)="recargarPermisos()">
+    </app-permisos-form>
+  </div>
+</app-modal>
+
+
+<app-permisos-table [permisos]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()" (onEdit)="seleccionarPermiso($event)"></app-permisos-table>
