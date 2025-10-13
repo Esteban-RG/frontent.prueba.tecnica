@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Permiso } from '../../models/Permiso';
+import { Permiso } from '../../shared/models/Permiso';
 
 @Injectable({
   providedIn: 'root'

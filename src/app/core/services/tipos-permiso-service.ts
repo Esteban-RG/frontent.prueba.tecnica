@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { TipoPermiso } from '../../models/TipoPermiso';
+import { TipoPermiso } from '../../shared/models/TipoPermiso';
 
 
 @Injectable({

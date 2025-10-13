@@ -2,11 +2,12 @@ import { Component, ViewChild, OnInit, AfterViewInit, ElementRef, Inject, PLATFO
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PermisosForm } from './permisos-form/permisos-form';
 import { PermisosTable } from "./permisos-table/permisos-table";
-import { PermisoService } from './permiso-service'; 
-import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
-import { Permiso } from '../../models/Permiso';
-import { TipoPermiso } from '../../models/TipoPermiso';
-import { Modal } from '../modal/modal';
+import { PermisoService } from '../../core/services/permiso-service'; 
+import { TiposPermisoService } from '../../core/services/tipos-permiso-service';
+import { Permiso } from '../../shared/models/Permiso';
+import { TipoPermiso } from '../../shared/models/TipoPermiso';
+import { Modal } from '../../shared/components/modal/modal';
+import { Navbar } from '../../shared/components/navbar/navbar'; 
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ChangeDetectorRef } from '@angular/core';
@@ -14,7 +15,7 @@ import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-permisos',
   standalone: true,
-  imports: [CommonModule, PermisosTable, PermisosForm, Modal],
+  imports: [CommonModule, PermisosTable, PermisosForm, Modal, Navbar],
   templateUrl: './permisos.html',
 })
 

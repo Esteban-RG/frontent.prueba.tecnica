@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PermisoService } from '../permiso-service';
-import { Permiso } from '../../../models/Permiso';
-import { TipoPermiso } from '../../../models/TipoPermiso';
+import { PermisoService } from '../../../core/services/permiso-service';
+import { Permiso } from '../../../shared/models/Permiso';
+import { TipoPermiso } from '../../../shared/models/TipoPermiso';
 import  Swal  from 'sweetalert2';
 
 

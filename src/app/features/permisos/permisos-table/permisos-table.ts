@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { PermisoService } from '../permiso-service';
-import { Permiso } from '../../../models/Permiso';
+import { PermisoService } from '../../../core/services/permiso-service';
+import { Permiso } from '../../../shared/models/Permiso';
 import Swal from 'sweetalert2';
 
 @Component({
