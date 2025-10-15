@@ -7,8 +7,9 @@ import { Card } from "../../shared/components/card/card";
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, Card],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './login.html',
+  styleUrl: './login.css'
 })
 
 export class Login {
