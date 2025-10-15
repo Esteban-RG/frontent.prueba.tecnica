@@ -17,18 +17,21 @@
             Inicio
           </a>
         </li>
-        <li class="nav-item">
+        @if (isEmpl) {
+          <li class="nav-item">
           <a routerLink="/permisos" routerLinkActive="active" class="nav-link text-white">
             Permisos
           </a>
         </li>
-        <li class="nav-item">
-          <a routerLink="/solicitudes" routerLinkActive="active" class="nav-link text-white">
-            Administrar Solicitudes
-          </a>
-        </li>
+        }
+        @if (isSuper) {
+          <li class="nav-item">
+            <a routerLink="/adm-solicitudes" routerLinkActive="active" class="nav-link text-white">
+              Administrar Solicitudes
+            </a>
+          </li>
+        }
       </ul>
-      
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link text-white" href="#">
