@@ -1,0 +1,13 @@
+<div *ngIf="permiso">
+  
+    <p><strong>Fecha:</strong> {{permiso.fechaPermiso | date:'fullDate'}}</p>
+    <p><strong>Nombre Empleado:</strong> {{permiso.nombreEmpleado}} {{permiso.apellidosEmpleado}}</p>
+    <p><strong>Tipo de Permiso:</strong> {{permiso.tipoPermiso.descripcion}}</p>
+    <p><strong>Estatus:</strong> {{permiso.estatusPermiso.descripcion}}</p>
+    <p><strong>Comentarios:</strong> {{permiso.comentariosSupervisor}}</p>
+
+    
+  
+</div>
+
+ 

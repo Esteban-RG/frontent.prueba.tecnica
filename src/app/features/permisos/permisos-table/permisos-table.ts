@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { PermisoService } from '../../../core/services/permiso-service';
+import { PermisoService } from '../permiso-service';
 import { Permiso } from '../../../shared/models/Permiso';
 import Swal from 'sweetalert2';
 
@@ -12,39 +12,18 @@ import Swal from 'sweetalert2';
 })
 
 
-
 export class PermisosTable {
 
   @Input() permisos: Permiso[] | null = [];
-  @Output() onDelete = new EventEmitter<void>();
-  @Output() onEdit = new EventEmitter<Permiso>();
+  @Input() isAdmin: boolean = false;
+  @Output() onDetails = new EventEmitter<Permiso>();
 
 
   constructor(
       private permisoService: PermisoService,
     ){}
 
-  handleDelete(id: number) {
-
-    Swal.fire({
-      title: "Eliminar permiso",
-      text: "¿Estás seguro de que deseas eliminar este permiso?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar"
-    }).then((result) => {
-      if (result.isConfirmed) { 
-        this.permisoService.deletePermiso(id).subscribe(() => {
-          this.onDelete.emit();
-        });
-      }
-    });
-
+  handleDetails(permiso: Permiso) {
+    this.onDetails.emit(permiso);
   }
-
-  handleEdit(permiso: Permiso) {
-    this.onEdit.emit(permiso);
-  }
-
 }

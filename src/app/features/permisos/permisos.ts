@@ -2,8 +2,8 @@ import { Component, ViewChild, OnInit, AfterViewInit, ElementRef, Inject, PLATFO
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { PermisosForm } from './permisos-form/permisos-form';
 import { PermisosTable } from "./permisos-table/permisos-table";
-import { PermisoService } from '../../core/services/permiso-service'; 
-import { TiposPermisoService } from '../../core/services/tipos-permiso-service';
+import { PermisoService } from './permiso-service'; 
+import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
 import { Permiso } from '../../shared/models/Permiso';
 import { TipoPermiso } from '../../shared/models/TipoPermiso';
 import { Modal } from '../../shared/components/modal/modal';
@@ -11,40 +11,50 @@ import { Navbar } from '../../shared/components/navbar/navbar';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ChangeDetectorRef } from '@angular/core';
+import { AuthService } from '../../core/services/auth-service';
+import { SolicitudesForm } from '../solicitudes/solicitudes-form/solicitudes-form';
+import { Card } from "../../shared/components/card/card";
+import { PermisoDetails } from './permiso-details/permiso-details';
+
 
 @Component({
   selector: 'app-permisos',
   standalone: true,
-  imports: [CommonModule, PermisosTable, PermisosForm, Modal, Navbar],
+  imports: [CommonModule, PermisosTable, Navbar, Card, Modal, SolicitudesForm, PermisoDetails],
   templateUrl: './permisos.html',
 })
 
 export class Permisos implements OnInit{
+  isAdmin: boolean = false;
 
-  @ViewChild('PermisoFormModal') modalPermisoForm!: Modal;
+  @ViewChild('SolicitudFormModal') modalPermisoForm!: Modal;
+  @ViewChild('PermisoDetailsModal') modalPermisoDetails!: Modal;
 
-  permisoSeleccionado?: Permiso;
+
+  permisoSeleccionado: Permiso | null = null;
   listaDePermisos$!: Observable<Permiso[]>;
   listaTiposPermiso$!: Observable<TipoPermiso[]>;
+  listaSolicitudes$!: Observable<Permiso[]>;
+
 
   constructor(
     private permisosService: PermisoService,
     private tiposPermisoService: TiposPermisoService, 
     private cdr: ChangeDetectorRef,
+    private authService: AuthService
   ){}
 
   ngOnInit(): void {
+    if (this.authService.isLoggedIn()) {
+      this.isAdmin = this.authService.hasRole('Administrador');
+    }
+
     this.recargarPermisos();
     this.recargarTiposPermiso();
   }
-  
-
-  seleccionarPermisoParaEditar(permiso: Permiso) {
-    this.permisoSeleccionado = permiso;
-  }
 
   recargarPermisos() {
-    this.listaDePermisos$ = this.permisosService.getPermisos().pipe(
+    this.listaDePermisos$ = this.permisosService.getMyPermisos().pipe(
       catchError((error) => {
         console.error('Error al obtener los permisos:', error);
         return of([]);
@@ -63,16 +73,14 @@ export class Permisos implements OnInit{
     this.cdr.detectChanges();
   }
 
-  seleccionarPermiso($event: Permiso) {
-    this.permisoSeleccionado = $event;
-
-    if (this.modalPermisoForm) {
-      this.modalPermisoForm.open();
+  showDetails(permiso: Permiso) {
+    this.permisoSeleccionado = permiso;
+    if (this.modalPermisoDetails) {
+      this.modalPermisoDetails.open();
     }
   }
 
-  addNewPermission() {
-    this.permisoSeleccionado = undefined;
+  addNewSolicitud() {
     if (this.modalPermisoForm) {
       this.modalPermisoForm.open();
     }

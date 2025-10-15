@@ -1,16 +1,6 @@
 <form [formGroup]="permisoForm" (ngSubmit)="onSubmit()">
 
   <div class="form-group mb-3">
-    <label for="nombre"><b>Nombre</b></label>
-    <input type="text" id="nombre" class="form-control" formControlName="nombre" placeholder="Ingrese el nombre">
-  </div>
-
-  <div class="form-group mb-3">
-    <label for="apellidos"><b>Apellidos</b></label>
-    <input type="text" id="apellidos" class="form-control" formControlName="apellidos" placeholder="Ingrese los apellidos">
-  </div>
-
-  <div class="form-group mb-3">
     <label for="tipoPermisoId"><b>Tipo de Permiso</b></label>
     <select id="idTipoPermiso" class="form-control" formControlName="idTipoPermiso">
       <option [ngValue]="null" disabled>Seleccione un tipo</option>
@@ -26,6 +16,6 @@
   </div>
 
   <button type="submit" class="btn btn-primary col-12" [disabled]="permisoForm.invalid">
-    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+    Guardar
   </button>
 </form>
