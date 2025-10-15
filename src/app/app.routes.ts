@@ -14,7 +14,6 @@ export const routes: Routes = [
     {path: 'login', component: Login },
     {path: 'home', component: Home, canActivate: [authGuard] },
     {path: 'permisos', component: Permisos, canActivate: [authGuard]},
-    {path: 'solicitudes', component: Solicitudes, canActivate: [authGuard]},
-    {path: 'tipos-permiso', component: TiposPermiso, canActivate: [authGuard]},
+    {path: 'adm-solicitudes', component: Solicitudes, canActivate: [authGuard]},
     { path: '**', redirectTo: 'home' }
 ];
