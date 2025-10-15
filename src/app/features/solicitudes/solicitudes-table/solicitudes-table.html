@@ -1,0 +1,65 @@
+<div *ngIf="solicitudes && solicitudes.length > 0; else noData">
+    <table class="table" id="solicitudesTable">
+        <thead class="table-primary">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope='col'>Nombre Empleado</th>
+                <th scope="col">Apellido Empleado</th>
+                <th scope="col">Tipo de Solicitud</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acciones</th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let solicitud of solicitudes" [attr.data-id]="solicitud.tipoPermiso.id">
+                <th scope="row">{{solicitud.id}}</th>
+                <td>{{solicitud.nombreEmpleado}}</td>
+                <td>{{solicitud.apellidosEmpleado}}</td>
+                <td>{{solicitud.tipoPermiso.descripcion}}</td>
+                <td>{{solicitud.fechaPermiso | date:'fullDate'}}</td>
+                <td>{{solicitud.estatusPermiso.descripcion}}</td>
+                <td >
+                    <div class="d-flex justify-content-center gap-2">
+
+                        
+                        
+
+                        @if (isSuper) {
+                            <!-- Botón Aceptar -->
+                            <button class="btn btn-primary btn-sm" title="Editar" aria-label="Editar"
+                                (click)="handleAccept(solicitud)">
+                                <i class="fas fa-trash">Aceptar</i>
+                            </button>
+    
+                            <!-- Botón Rechazar -->
+                            <button class="btn btn-danger btn-sm" title="Editar" aria-label="Editar"
+                                (click)="handleDeny(solicitud)">
+                                <i class="fas fa-trash">Rechazar</i>
+                            </button>
+                        }
+
+                        @if (isAdmin) {
+    
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm" title="Eliminar" aria-label="Eliminar"
+                                (click)="handleDelete(solicitud.id)">
+                                <i class="fas fa-trash">Eliminar</i>
+                            </button>
+                        }
+
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>   
+    </table>
+</div>
+
+<ng-template #noData>
+    <div class="text-center py-4">
+        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+        <h5 class="text-muted">No se encontraron solicitudes</h5>
+    </div>
+</ng-template>
+

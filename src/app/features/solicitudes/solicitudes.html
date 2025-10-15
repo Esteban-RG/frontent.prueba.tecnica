@@ -1,0 +1,9 @@
+<app-navbar></app-navbar>
+
+
+<app-card>  
+  <div slot="body">
+    <app-solicitudes-table [solicitudes]="(listaDeSolicitudes$ | async)" (onDelete)="recargarSolicitudes()" [isAdmin] = "(isAdmin)" [isSuper]="(isSuper)"></app-solicitudes-table>
+  </div>
+</app-card>
+
