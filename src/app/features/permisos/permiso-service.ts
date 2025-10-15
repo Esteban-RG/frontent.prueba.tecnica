@@ -35,8 +35,8 @@ export class PermisoService {
     return this.http.put<Permiso>(`${this.apiUrl}/${permisoData.id}`, permisoData);
   }
 
-  aprovePermiso(id: number, comentariosSupervisor: string): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/Aprobar/${id}`, { comentariosSupervisor });
+  aprovePermiso(id: number): Observable<void> {
+    return this.http.patch<void>(`${this.apiUrl}/Aprobar/${id}`, {});
   }
 
   denyPermiso(id: number, comentariosSupervisor: string): Observable<void> { 
