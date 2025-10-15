@@ -21,7 +21,7 @@ export class AuthService {
       tap(response => {
         if (isPlatformBrowser(this.platformId) && response && response.token) {
           localStorage.setItem('auth_token', response.token);
-          this.router.navigate(['/permisos']);
+          this.router.navigate(['/home']);
         }
       })
     );
