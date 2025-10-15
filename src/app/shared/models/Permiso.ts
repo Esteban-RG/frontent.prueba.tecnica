@@ -1,10 +1,16 @@
 export interface Permiso {
   id: number;
-  nombre: string;
-  apellidos: string;
+  nombreEmpleado: string;
+  apellidosEmpleado: string;
   tipoPermiso: {
     id: number;
     descripcion: string;
   }
-  fecha: Date;
+  estatusPermiso: {
+    id: number;
+    descripcion: string;
+  }
+  fechaPermiso: Date;
+  fechaRevision: Date;
+  comentariosSupervisor: string;
 }
