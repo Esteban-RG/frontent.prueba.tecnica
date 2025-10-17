@@ -25,7 +25,7 @@
                         
                         
 
-                        @if (isSuper) {
+                        @if (isSuper || isAdmin) {
                             <!-- Botón Aceptar -->
                             <button class="btn btn-primary btn-sm" title="Editar" aria-label="Editar"
                                 (click)="handleAccept(solicitud)">

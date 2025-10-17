@@ -1,0 +1,23 @@
+<app-navbar></app-navbar>
+
+<button  type="button" class="btn btn-primary m-3" (click)="addNewPermiso()">
+ Nuevo Permiso
+</button>
+
+<app-modal #PermisoFormModal 
+  [modalId]="('PermisoFormModal')" 
+  [modalTitle]="('Registrar Permiso')">
+  <div slot="body">
+    <app-adm-permisos-form 
+      [tiposPermiso]="listaDeTipos$ | async"
+      [usuarios]="listaDeUsuarios$ | async"
+      (onSave)="recargarPermisos()">
+    </app-adm-permisos-form>
+  </div>
+</app-modal>
+
+<app-card>  
+  <div slot="body">
+    <app-solicitudes-table [solicitudes]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()" [isAdmin] = "(isAdmin)"></app-solicitudes-table>
+  </div>
+</app-card>

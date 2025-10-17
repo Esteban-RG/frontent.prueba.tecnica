@@ -23,6 +23,14 @@ export class PermisoService {
     return this.http.get<Permiso[]>(`${this.apiUrl}/MisPermisos`);
   }
 
+  searchPermisos(tipoPermisoId: number, idEstatusPermiso: number): Observable<Permiso[]> {
+    return this.http.get<Permiso[]>(`${this.apiUrl}/Search?TipoPermisoId=${tipoPermisoId}&IdEstatusPermiso=${idEstatusPermiso}`);
+  }
+
+  addSolicitud(permisoData: Partial<Permiso>): Observable<Permiso> {
+    return this.http.post<Permiso>(`${this.apiUrl}/Solicitud`, permisoData);
+  }
+
   addPermiso(permisoData: Partial<Permiso>): Observable<Permiso> {
     return this.http.post<Permiso>(this.apiUrl, permisoData);
   }
