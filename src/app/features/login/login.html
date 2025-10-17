@@ -16,17 +16,24 @@
           </div>
 
           <!-- Email input -->
-          <div data-mdb-input-init class="form-group form-outline mb-4">
+          <div class="form-group mb-4">
+            <label class="form-label" for="InputEmail">Email</label>
             <input type="email" class="form-control" id="InputEmail" formControlName="email"
               placeholder="Ingrese su Email" />
-            <label class="form-label" for="form3Example3">Email address</label>
+            <div *ngIf="formLogin.get('email')?.invalid && formLogin.get('email')?.touched" class="text-danger">
+              <div *ngIf="formLogin.get('email')?.hasError('required')">El email es requerido.</div>
+              <div *ngIf="formLogin.get('email')?.hasError('email')">El formato del email es inválido.</div>
+            </div>
           </div>
 
           <!-- Password input -->
-          <div data-mdb-input-init class="form-group  mb-3">
+          <div class="form-group mb-3">
+            <label class="form-label" for="Password">Password</label>
             <input type="password" class="form-control" id="Password" formControlName="password"
               placeholder="Ingrese su contraseña" />
-            <label class="form-label" for="form3Example4">Password</label>
+            <div *ngIf="formLogin.get('password')?.invalid && formLogin.get('password')?.touched" class="text-danger">
+              <div *ngIf="formLogin.get('password')?.hasError('required')">La contraseña es requerida.</div>
+            </div>
           </div>
 
           
