@@ -5,6 +5,7 @@ import { TiposPermiso } from './features/tipos-permiso/tipos-permiso';
 import { Home } from './features/home/home';
 import { Login } from './features/login/login';
 import { Solicitudes } from './features/solicitudes/solicitudes';
+import { AdmPermisos } from './features/adm-permisos/adm-permisos';
 
 
 
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path: 'login', component: Login },
     {path: 'home', component: Home, canActivate: [authGuard] },
     {path: 'permisos', component: Permisos, canActivate: [authGuard]},
-    {path: 'adm-solicitudes', component: Solicitudes, canActivate: [authGuard]},
+    {path: 'spr-solicitudes', component: Solicitudes, canActivate: [authGuard]},
+    {path: 'adm-permisos', component: AdmPermisos, canActivate: [authGuard]},
     { path: '**', redirectTo: 'home' }
 ];
