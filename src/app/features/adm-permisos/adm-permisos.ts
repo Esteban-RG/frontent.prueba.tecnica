@@ -13,38 +13,34 @@ import { Card } from "../../shared/components/card/card";
 import { SolicitudesTable } from "../solicitudes/solicitudes-table/solicitudes-table";
 import { Permiso } from '../../shared/models/Permiso';
 import { PermisoService } from '../permisos/permiso-service';
-import { AuthService } from '../../core/services/auth-service';
+import { PermisoSearch } from "../permisos/permiso-search/permiso-search";
 
 
 @Component({
   selector: 'app-adm-permisos',
-  imports: [CommonModule, Navbar, Modal, AdmPermisosForm, Card, SolicitudesTable],
+  imports: [CommonModule, Navbar, Modal, AdmPermisosForm, Card, SolicitudesTable, PermisoSearch],
   templateUrl: './adm-permisos.html',
   styleUrl: './adm-permisos.css'
 })
 export class AdmPermisos implements OnInit{
+
 
   @ViewChild('PermisoFormModal') modalPermisoForm!: Modal;
   
   listaDeUsuarios$!: Observable<Usuario[]>;
   listaDeTipos$!: Observable<TipoPermiso[]>;
   listaDePermisos$!: Observable<Permiso[]>;
-  isAdmin: boolean = false;
-  
+
   constructor(
     private userService: UserService,
     private tiposPermisoService: TiposPermisoService, 
     private permisoService: PermisoService,
-    private authService: AuthService,
     private cdr: ChangeDetectorRef
-  ){
-    this.isAdmin = this.authService.hasRole('Administrador');
-  }
+  ){ }
   
   ngOnInit(): void {
     this.recargarUsuarios();
     this.recargarTiposPermiso();
-    this.recargarPermisos();
   }
   
   recargarUsuarios() {
@@ -80,6 +76,9 @@ export class AdmPermisos implements OnInit{
     if (this.modalPermisoForm) {
       this.modalPermisoForm.open();
     }
+  }
+  onSearch(permisos: Permiso[]) {
+    this.listaDePermisos$ = of(permisos);
   }
 
 }
