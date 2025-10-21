@@ -1,8 +1,6 @@
 <app-navbar></app-navbar>
 
-<button  type="button" class="btn btn-primary m-3" (click)="addNewPermiso()">
- Nuevo Permiso
-</button>
+
 
 <app-modal #PermisoFormModal 
   [modalId]="('PermisoFormModal')" 
@@ -17,7 +15,15 @@
 </app-modal>
 
 <app-card>  
+
   <div slot="body">
-    <app-solicitudes-table [solicitudes]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()" [isAdmin] = "(isAdmin)"></app-solicitudes-table>
+    <div class="row">
+      <button  type="button" class="btn btn-primary col-1" (click)="addNewPermiso()">
+      <i class="bi bi-plus-lg"></i>
+      </button>
+      <app-permiso-search (onSearch)="onSearch($event)" class="col-11">
+      </app-permiso-search>
+    </div>
+    <app-solicitudes-table [solicitudes]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()"></app-solicitudes-table>
   </div>
 </app-card>
