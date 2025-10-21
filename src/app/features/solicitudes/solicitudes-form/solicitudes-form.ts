@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PermisoService } from '../../permisos/permiso-service';
 import { TipoPermiso } from '../../../shared/models/TipoPermiso';
-import { Usuario } from '../../../shared/models/Usuario';
 import  Swal  from 'sweetalert2';
 
 @Component({
@@ -13,7 +12,6 @@ import  Swal  from 'sweetalert2';
 })
 export class SolicitudesForm {
   @Input() tiposPermiso: TipoPermiso[] | null = []; 
-  @Input() listaUsuarios: Usuario[] | null = []; 
   @Output() onSave = new EventEmitter<void>(); 
 
   solicitudForm: FormGroup;
@@ -40,7 +38,7 @@ export class SolicitudesForm {
 
     const formValue = this.solicitudForm.value;
 
-    this.permisoService.addPermiso(formValue).subscribe({
+    this.permisoService.addSolicitud(formValue).subscribe({
       next: () => {
         Swal.fire({
         text: "Solicitud guardada correctamente",

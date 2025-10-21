@@ -17,21 +17,21 @@
             Inicio
           </a>
         </li>
-        @if (isEmpl) {
+        @if (isEmpl$ | async) {
           <li class="nav-item">
           <a routerLink="/permisos" routerLinkActive="active" class="nav-link text-white">
             Permisos
           </a>
         </li>
         }
-        @if (isSuper) {
+        @if (isSuper$ | async) {
           <li class="nav-item">
             <a routerLink="/spr-solicitudes" routerLinkActive="active" class="nav-link text-white">
               Administrar Solicitudes
             </a>
           </li>
         }
-        @if (isSuper) {
+        @if (isSuper$ | async) {
           <li class="nav-item">
             <a routerLink="/adm-permisos" routerLinkActive="active" class="nav-link text-white">
               Administrar Permisos
@@ -42,7 +42,7 @@
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link text-white" href="#">
-            {{username}}
+            {{username$ |  async}}
           </a>
         </li>
         <li class="nav-item">

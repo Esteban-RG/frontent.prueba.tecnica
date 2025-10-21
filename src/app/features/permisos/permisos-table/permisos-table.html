@@ -1,38 +1,44 @@
-<div *ngIf="permisos && permisos.length > 0; else noData">
-    <table class="table" id="permisosTable">
-        <thead class="table-primary">
-            <tr>
-                <th scope="col">Fecha</th>
-                <th scope="col">Tipo de Permiso</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Acciones</th>            
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let permiso of permisos" [attr.data-id]="permiso.tipoPermiso.id">
-                <td>{{permiso.fechaPermiso | date:'fullDate'}}</td>
-                <td>{{permiso.tipoPermiso.descripcion}}</td>
-                <td>{{permiso.estatusPermiso.descripcion}}</td>
-                <td>
-                    <div class="d-flex justify-content-center gap-2">
+@if (permisos && permisos.length > 0) {
+    <div>
+        <table class="table" id="permisosTable">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Tipo de Permiso</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>            
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let permiso of permisos" [attr.data-id]="permiso.tipoPermiso.id">
+                    <td>{{permiso.fechaPermiso | date:'fullDate'}}</td>
+                    <td>{{permiso.tipoPermiso.descripcion}}</td>
+                    <td>{{permiso.estatusPermiso.descripcion}}</td>
+                    <td>
+                        <div class="d-flex gap-2">
 
-                        <!-- Botón Detalles -->
-                        <button class="btn btn-info btn-sm" title="Detalles" aria-label="Detalles"
-                            (click)="handleDetails(permiso)">
-                            <i class="fas fa-trash">Detalles</i>
-                        </button>
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>   
-    </table>
-</div>
-
-<ng-template #noData>
-    <div class="text-center py-4">
-        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
-        <h5 class="text-muted">No se encontraron permisos</h5>
+                            <!-- Botón Detalles -->
+                            <button class="btn btn-info btn-sm"
+                                (click)="handleDetails(permiso)">
+                                <i class="bi bi-eye"></i>
+                            </button>
+                            
+                        </div>
+                    </td>
+                </tr>
+            </tbody>   
+        </table>
     </div>
-</ng-template>
+} @else {
+    <ng-template #noData>
+        <div class="text-center py-4">
+            <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+            <h5 class="text-muted">No se encontraron permisos</h5>
+        </div>
+    </ng-template>
+}
+
+
+
+
 

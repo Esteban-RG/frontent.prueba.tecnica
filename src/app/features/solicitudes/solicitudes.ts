@@ -6,8 +6,6 @@ import { Modal } from '../../shared/components/modal/modal';
 import { PermisoService } from '../permisos/permiso-service';
 import { Permiso } from '../../shared/models/Permiso';
 import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
-import { AuthService } from '../../core/services/auth-service';
-import { SolicitudesForm } from './solicitudes-form/solicitudes-form';
 import { CommonModule } from '@angular/common';
 import { SolicitudesTable } from './solicitudes-table/solicitudes-table';
 import { Card } from '../../shared/components/card/card';
@@ -17,9 +15,7 @@ import { Card } from '../../shared/components/card/card';
   imports: [CommonModule, Navbar, SolicitudesTable, Card],
   templateUrl: './solicitudes.html',
 })
-export class Solicitudes implements OnInit{
-isAdmin: boolean = false;
-isSuper: boolean = false;
+export class Solicitudes{
 
 
   @ViewChild('SolicitudFormModal') modalPermisoForm!: Modal;
@@ -32,17 +28,11 @@ isSuper: boolean = false;
     private permisoService: PermisoService,
     private tiposPermisoService: TiposPermisoService, 
     private cdr: ChangeDetectorRef,
-    private authService: AuthService
   ){}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      this.isAdmin = this.authService.hasRole('Administrador');
-      this.isSuper = this.authService.hasRole('Supervisor');
-    }
-
-    this.recargarSolicitudes();
     this.recargarTiposPermiso();
+    this.recargarSolicitudes();
   }
 
   recargarSolicitudes() {
@@ -69,5 +59,9 @@ isSuper: boolean = false;
     if (this.modalPermisoForm) {
       this.modalPermisoForm.open();
     }
+  }
+
+  onSearch(permisos: Permiso[]) {
+    this.listaDeSolicitudes$ = of(permisos);
   }
 }

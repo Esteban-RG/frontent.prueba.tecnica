@@ -1,15 +1,16 @@
 <app-navbar></app-navbar>
 
-<button *ngIf="!isAdmin" type="button" class="btn btn-primary m-3" (click)="addNewSolicitud()">
- Solicitar Permiso
-</button>
+@if (isEmpl$ |async) {
+  <button type="button" class="btn btn-primary m-3" (click)="addNewSolicitud()">
+   Solicitar Permiso
+  </button>
+}
 
 <app-modal #SolicitudFormModal 
   [modalId]="('SolicitudFormModal')" 
   [modalTitle]="('Solicitar Permiso')">
   <div slot="body">
     <app-solicitudes-form 
-      *ngIf="!isAdmin"
       [tiposPermiso]="listaTiposPermiso$ | async"
       (onSave)="recargarPermisos()">
     </app-solicitudes-form>
@@ -28,6 +29,6 @@
 
 <app-card>
   <div slot="body">
-  <app-permisos-table [permisos]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()" [isAdmin] = "(isAdmin)" (onDetails)="showDetails($event)"></app-permisos-table>  </div>
+  <app-permisos-table [permisos]="(listaDePermisos$ | async)" (onDelete)="recargarPermisos()"  (onDetails)="showDetails($event)"></app-permisos-table>  </div>
 </app-card>
 

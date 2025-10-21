@@ -1,8 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { PermisoService } from '../permiso-service';
 import { Permiso } from '../../../shared/models/Permiso';
-import Swal from 'sweetalert2';
+import { AuthService } from '../../../core/services/auth-service';
 
 @Component({
   selector: 'app-permisos-table',
@@ -15,12 +14,11 @@ import Swal from 'sweetalert2';
 export class PermisosTable {
 
   @Input() permisos: Permiso[] | null = [];
-  @Input() isAdmin: boolean = false;
   @Output() onDetails = new EventEmitter<Permiso>();
 
 
   constructor(
-      private permisoService: PermisoService,
+      private authService: AuthService
     ){}
 
   handleDetails(permiso: Permiso) {

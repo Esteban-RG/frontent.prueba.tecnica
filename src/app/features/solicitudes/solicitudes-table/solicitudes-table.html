@@ -1,6 +1,6 @@
 <div *ngIf="solicitudes && solicitudes.length > 0; else noData">
     <table class="table" id="solicitudesTable">
-        <thead class="table-primary">
+        <thead class="table-dark">
             <tr>
                 <th scope="col">ID</th>
                 <th scope='col'>Nombre Empleado</th>
@@ -20,31 +20,28 @@
                 <td>{{solicitud.fechaPermiso | date:'fullDate'}}</td>
                 <td>{{solicitud.estatusPermiso.descripcion}}</td>
                 <td >
-                    <div class="d-flex justify-content-center gap-2">
+                    <div class="d-flex justify-content-center gap-2">                    
 
-                        
-                        
-
-                        @if (isSuper || isAdmin) {
+                        @if ((isSuper$ | async) || (isAdmin$ | async)) {
                             <!-- Botón Aceptar -->
-                            <button class="btn btn-primary btn-sm" title="Editar" aria-label="Editar"
+                            <button class="btn btn-success btn-sm"
                                 (click)="handleAccept(solicitud)">
-                                <i class="fas fa-trash">Aceptar</i>
+                                <i class="bi bi-check2"></i>
                             </button>
     
                             <!-- Botón Rechazar -->
-                            <button class="btn btn-danger btn-sm" title="Editar" aria-label="Editar"
+                            <button class="btn btn-danger btn-sm"
                                 (click)="handleDeny(solicitud)">
-                                <i class="fas fa-trash">Rechazar</i>
+                                <i class="bi bi-x"></i>
                             </button>
                         }
 
-                        @if (isAdmin) {
+                        @if (isAdmin$ | async) {
     
                             <!-- Botón Eliminar -->
-                            <button class="btn btn-danger btn-sm" title="Eliminar" aria-label="Eliminar"
+                            <button class="btn btn-danger btn-sm" 
                                 (click)="handleDelete(solicitud.id)">
-                                <i class="fas fa-trash">Eliminar</i>
+                                <i class="bi bi-trash"></i>
                             </button>
                         }
 

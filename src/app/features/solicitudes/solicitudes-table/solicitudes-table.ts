@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Permiso } from '../../../shared/models/Permiso';
 import { PermisoService } from '../../permisos/permiso-service';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../../core/services/auth-service';
 
 @Component({
   selector: 'app-solicitudes-table',
@@ -10,16 +12,20 @@ import Swal from 'sweetalert2';
   templateUrl: './solicitudes-table.html',
 })
 export class SolicitudesTable {
+  isAdmin$: Observable<boolean>;
+  isSuper$: Observable<boolean>;
 
   @Input() solicitudes: Permiso[] | null = [];
-  @Input() isAdmin: boolean = false;
-  @Input() isSuper: boolean = false;
   @Output() onDelete = new EventEmitter<void>();
   @Output() onEdit = new EventEmitter<Permiso>();
 
   constructor(
         private permisoService: PermisoService,
-      ){}
+        private authService: AuthService
+      ){
+        this.isAdmin$ = this.authService.hasRole('Administrador');
+        this.isSuper$ = this.authService.hasRole('Supervisor');
+      }
 
   handleDelete(id: number) {
       Swal.fire({

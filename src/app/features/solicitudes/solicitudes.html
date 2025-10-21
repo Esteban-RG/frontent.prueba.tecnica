@@ -3,7 +3,6 @@
 
 <app-card>  
   <div slot="body">
-    <app-solicitudes-table [solicitudes]="(listaDeSolicitudes$ | async)" (onDelete)="recargarSolicitudes()" [isAdmin] = "(isAdmin)" [isSuper]="(isSuper)"></app-solicitudes-table>
+    <app-solicitudes-table [solicitudes]="(listaDeSolicitudes$ | async)" (onDelete)="recargarSolicitudes()"></app-solicitudes-table>
   </div>
 </app-card>
-

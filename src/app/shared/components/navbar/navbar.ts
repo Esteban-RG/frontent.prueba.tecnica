@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service';
 import { CommonModule } from '@angular/common';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-navbar',
@@ -10,24 +11,20 @@ import { CommonModule } from '@angular/common';
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class Navbar implements OnInit {
-  username: string | null = null;
-  isAdmin: boolean = false;
-  isSuper: boolean = false;
-  isEmpl: boolean = false;
+export class Navbar {
+  username$: Observable<string | null>;
+  isAdmin$: Observable<boolean>;
+  isSuper$: Observable<boolean>;
+  isEmpl$: Observable<boolean>;
 
   constructor(private authService: AuthService) {
-    this.isAdmin = this.authService.hasRole('Administrador');
-    this.isSuper = this.authService.hasRole('Supervisor');
-    this.isEmpl = this.authService.hasRole('Empleado');
+    this.username$ = this.authService.getUsername$;
+    this.isAdmin$ = this.authService.hasRole('Administrador');
+    this.isSuper$ = this.authService.hasRole('Supervisor');
+    this.isEmpl$ = this.authService.hasRole('Empleado');
   }
-
-  ngOnInit(): void {
-    this.username = this.authService.getUsername();
-  }
-
+  
   onLogout(): void {
-    console.log('Cerrando sesion...');
     this.authService.logout();
   }
 
