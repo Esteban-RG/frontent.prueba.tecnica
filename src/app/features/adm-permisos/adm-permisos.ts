@@ -1,10 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Navbar } from "../../shared/components/navbar/navbar";
 import { catchError, Observable, of } from 'rxjs';
-import { Usuario } from '../../shared/models/Usuario';
-import { UserService } from '../../core/services/user-service';
 import { ChangeDetectorRef } from '@angular/core';
-import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
+import { TiposPermisoService } from '../../core/services/tipos-permiso-service';
 import { TipoPermiso } from '../../shared/models/TipoPermiso';
 import { Modal } from "../../shared/components/modal/modal";
 import { AdmPermisosForm } from "./adm-permisos-form/adm-permisos-form";
@@ -27,30 +25,19 @@ export class AdmPermisos implements OnInit{
 
   @ViewChild('PermisoFormModal') modalPermisoForm!: Modal;
   
-  listaDeUsuarios$!: Observable<Usuario[]>;
   listaDeTipos$!: Observable<TipoPermiso[]>;
   listaDePermisos$!: Observable<Permiso[]>;
 
   constructor(
-    private userService: UserService,
     private tiposPermisoService: TiposPermisoService, 
     private permisoService: PermisoService,
     private cdr: ChangeDetectorRef
   ){ }
   
   ngOnInit(): void {
-    this.recargarUsuarios();
     this.recargarTiposPermiso();
   }
   
-  recargarUsuarios() {
-    this.listaDeUsuarios$ = this.userService.getUsers().pipe(catchError((error) => {
-        console.error('Error al obtener usuarios:', error);
-        return of([]);
-      })
-    );
-    this.cdr.detectChanges(); 
-  }
   
   recargarTiposPermiso() {
     this.listaDeTipos$ = this.tiposPermisoService.getTiposPermiso().pipe(

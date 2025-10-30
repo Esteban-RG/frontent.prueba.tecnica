@@ -8,7 +8,6 @@
   <div slot="body">
     <app-adm-permisos-form 
       [tiposPermiso]="listaDeTipos$ | async"
-      [usuarios]="listaDeUsuarios$ | async"
       (onSave)="recargarPermisos()">
     </app-adm-permisos-form>
   </div>

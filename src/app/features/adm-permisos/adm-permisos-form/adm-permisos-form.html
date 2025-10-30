@@ -4,7 +4,7 @@
         <label for="usuarioId">Usuario</label>
         <select class="form-control" name="usuarioId" id="usuarioId" formControlName="usuarioId">
             <option [ngValue]="null">Seleccione un usuario</option>
-            @for (usuario of usuarios; track $index) {
+            @for (usuario of usuarios$ | async; track $index) {
             <option [value]="usuario.id">{{usuario.nombre}} {{usuario.apellidos}}</option>
             }
         </select>

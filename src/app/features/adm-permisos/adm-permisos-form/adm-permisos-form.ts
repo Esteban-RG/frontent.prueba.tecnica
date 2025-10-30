@@ -1,27 +1,35 @@
-import { Component, Input, Output, EventEmitter, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, DestroyRef } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'; // ¡Importante!
+import { Observable, take, switchMap, of, map } from 'rxjs'; // ¡Importante!
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TipoPermiso } from '../../../shared/models/TipoPermiso';
 import { Usuario } from '../../../shared/models/Usuario';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PermisoService } from '../../permisos/permiso-service';
+import { UserService } from '../../../core/services/user-service';
+
 
 @Component({
   selector: 'app-adm-permisos-form',
+  standalone: true, 
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './adm-permisos-form.html',
   styleUrl: './adm-permisos-form.css'
 })
 export class AdmPermisosForm implements OnInit {
-  @Input() tiposPermiso: TipoPermiso[] | null = []; 
-  @Input() usuarios: Usuario[] | null = []; 
-  @Output() onSave = new EventEmitter<void>();
+  usuarios$: Observable<Usuario[]>;
   permisoForm: FormGroup;
+  
+  @Input() tiposPermiso: TipoPermiso[] | null = []; 
+  @Output() onSave = new EventEmitter<void>();
 
   constructor(
     private fb: FormBuilder,
     private permisoService: PermisoService,
-    private cdr: ChangeDetectorRef
+    private userService: UserService,
+    private destroyRef: DestroyRef 
   ){
+    this.usuarios$ = this.userService.users$;
     this.permisoForm = this.fb.group({
       usuarioId: [null],
       nombreEmpleado: [null, Validators.required],
@@ -32,28 +40,56 @@ export class AdmPermisosForm implements OnInit {
   }
 
   ngOnInit(): void {
-    this.permisoForm.get('usuarioId')?.valueChanges.subscribe(userId => {
-      if (userId) {
-        const selectedUser = this.usuarios?.find(user => user.id === +userId);
-        if (selectedUser) {
-          this.permisoForm.patchValue({
-            nombreEmpleado: selectedUser.nombre,
-            apellidosEmpleado: selectedUser.apellidos
-          });
+    this.loadUsersIfNeeded();
+    this.setupUserSelectionListener();
+  }
+
+  private loadUsersIfNeeded(): void {
+    this.usuarios$.pipe(take(1)).subscribe(currentUsers => {
+      if (currentUsers.length === 0) {
+        this.userService.getUsers().subscribe({
+          error: err => console.error('Error al cargar la lista inicial de usuarios', err)
+        });
+      }
+    });
+  }
+
+  private setupUserSelectionListener(): void {
+    const usuarioIdControl = this.permisoForm.get('usuarioId');
+    if (!usuarioIdControl) return;
+
+    usuarioIdControl.valueChanges.pipe(
+      switchMap(selectedUserId => {
+        if (!selectedUserId) {
+          return of(null);
         }
+        return this.usuarios$.pipe(
+          take(1),
+          map(users => users.find(user => user.id === +selectedUserId) || null)
+        );
+      }),
+      takeUntilDestroyed(this.destroyRef) 
+    ).subscribe(selectedUser => {
+      if (selectedUser) {
+        this.permisoForm.patchValue({
+          nombreEmpleado: selectedUser.nombre,
+          apellidosEmpleado: selectedUser.apellidos
+        }, { emitEvent: false }); 
       } else {
         this.permisoForm.patchValue({
           nombreEmpleado: null,
           apellidosEmpleado: null
-        });
+        }, { emitEvent: false });
       }
-
     });
-    this.cdr.detectChanges(); 
-
   }
 
   onSubmit() {
+    if (this.permisoForm.invalid) {
+      this.permisoForm.markAllAsTouched(); 
+      return;
+    }
+
     const formValue = this.permisoForm.value;
 
     this.permisoService.addPermiso(formValue).subscribe({
@@ -66,6 +102,5 @@ export class AdmPermisosForm implements OnInit {
         console.error('Error al guardar el permiso:', err);
       }
     });
-
   }
 }
