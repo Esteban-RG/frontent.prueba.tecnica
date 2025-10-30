@@ -1,0 +1,60 @@
+
+<div class="d-flex align-items-end gap-3 mb-3">
+    <div class="form-group">
+        <label for="turno">Turno</label>
+        <select name="turno" id="turno" class="form-select" #selectTurno>
+            @for (turno of turnos$ | async ; track $index) {
+                <option value="{{turno.idTurno}}">{{ turno.horaInicio }}-{{ turno.horaFin }}</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="fechaInicio">Fecha Inicio</label>
+        <input type="date" id="fechaInicio" class="form-control" #fechaInicio>
+    </div>
+
+    <div class="form-group">
+        <label for="fechaFin">Fecha Fin</label>
+        <input type="date" id="fechaFin" class="form-control" #fechaFin>
+    </div>
+
+    <button class="btn btn-primary" (click)="handleAdd(selectTurno.value, fechaInicio.value, fechaFin.value)">Agregar</button>
+</div>
+
+<div *ngIf="(turnosByUser | async ) as turnosData; else noData">
+    <table class="table" id="turnosTable">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope='col'>Jornada</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Acciones</th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let turno of turnosData">
+                <th scope="row">{{turno.idTurno}}</th>
+                <td>{{turno.horaInicio | slice:0:5}} - {{turno.horaFin | slice:0:5}}</td>
+                <td>{{turno.codigoTurno.descripcion}}</td>
+                <td>{{turno.duracionHoras}}</td>
+                <td >
+                    <div class="d-flex justify-content-center gap-2">                    
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm" 
+                                (click)="handleDelete(turno.idTurno)">
+                                <i class="bi bi-trash"></i>
+                            </button>              
+                    </div>
+                </td>
+            </tr>
+        </tbody>   
+    </table>
+</div>
+
+<ng-template #noData>
+    <div class="text-center py-4">
+        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+        <h5 class="text-muted">No se encontraron turnos</h5>
+    </div>
+</ng-template>

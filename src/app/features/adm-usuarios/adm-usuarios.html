@@ -1,0 +1,17 @@
+<app-navbar></app-navbar>
+<app-modal #UsuarioModal 
+  [modalId]="('UsuarioFormModal')" 
+  [modalTitle]="('Editar Usuario')">
+    > 
+    <div slot="body">
+        <app-usuario-edit [usuario]="selectedUsuario">      
+        
+        </app-usuario-edit>
+    </div>
+</app-modal>
+
+<app-card>
+    <div slot="body">
+        <app-usuarios-table (usuario)="openModal($event)"></app-usuarios-table>
+    </div>
+</app-card>
