@@ -1,0 +1,44 @@
+<div *ngIf="(turnos$ | async) as turnosData; else noData">
+    <table class="table" id="turnosTable">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope='col'>Hora Inicio</th>
+                <th scope="col">Hora Fin</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Duracion (horas)</th>
+                <th scope="col">Acciones</th>            
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let turno of turnosData">
+                <th scope="row">{{turno.idTurno}}</th>
+                <td>{{turno.horaInicio | slice:0:5}}</td>
+                <td>{{turno.horaFin | slice:0:5}}</td>
+                <td>{{turno.codigoTurno.descripcion}}</td>
+                <td>{{turno.duracionHoras}}</td>
+                <td >
+                    <div class="d-flex justify-content-center gap-2">                    
+                            <!-- Botón Editar -->
+                            <button class="btn btn-warning btn-sm" 
+                                (click)="handleEdit(turno)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <!-- Botón Eliminar -->
+                            <button class="btn btn-danger btn-sm" 
+                                (click)="handleDelete(turno.idTurno)">
+                                <i class="bi bi-trash"></i>
+                            </button>              
+                    </div>
+                </td>
+            </tr>
+        </tbody>   
+    </table>
+</div>
+
+<ng-template #noData>
+    <div class="text-center py-4">
+        <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+        <h5 class="text-muted">No se encontraron turnos</h5>
+    </div>
+</ng-template>

@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+
+<app-modal #TurnoFormModal 
+  [modalId]="('TurnoFormModal')" 
+  [modalTitle]="(selectedTurno ? 'Editar Turno' : 'Registrar Turno')">
+  <div slot="body">
+    <app-turno-form [turno]="selectedTurno">
+    </app-turno-form>  
+  </div>
+</app-modal>
+
+
+<app-card>  
+
+  <div slot="body">
+    <div class="row">
+      <button  type="button" class="btn btn-primary col-1" (click)="addNewTurno()">
+      <i class="bi bi-plus-lg"></i>
+      </button>
+
+    </div>
+    <app-turnos-table (editTurno)="handleEditTurno($event)"></app-turnos-table>
+  </div>
+</app-card>
