@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Permiso } from '../../shared/models/Permiso';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermisoService {
-  private apiUrl = 'https://localhost:44325/api/Permiso';
+  private apiUrl = `${environment.apiUrl}/api/Permiso`;
 
   constructor(private http: HttpClient) { }
 

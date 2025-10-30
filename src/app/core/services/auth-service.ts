@@ -5,6 +5,7 @@ import { tap, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -55,7 +56,7 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    return this.http.post<any>('https://localhost:44325/api/Auth/Login', { email, password }).pipe(
+    return this.http.post<any>(`${environment.apiUrl}/api/Auth/Login`, { email, password }).pipe(
       tap(response => {
         if (isPlatformBrowser(this.platformId) && response && response.token) {
           localStorage.setItem('auth_token', response.token);
