@@ -2,7 +2,7 @@ import { Component, ViewChild, OnInit} from '@angular/core';
 import { CommonModule} from '@angular/common';
 import { PermisosTable } from "./permisos-table/permisos-table";
 import { PermisoService } from './permiso-service'; 
-import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
+import { TiposPermisoService } from '../../core/services/tipos-permiso-service';
 import { Permiso } from '../../shared/models/Permiso';
 import { TipoPermiso } from '../../shared/models/TipoPermiso';
 import { Modal } from '../../shared/components/modal/modal';

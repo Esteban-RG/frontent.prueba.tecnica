@@ -5,7 +5,7 @@ import { catchError, Observable, of } from 'rxjs';
 import { Modal } from '../../shared/components/modal/modal';
 import { PermisoService } from '../permisos/permiso-service';
 import { Permiso } from '../../shared/models/Permiso';
-import { TiposPermisoService } from '../tipos-permiso/tipos-permiso-service';
+import { TiposPermisoService } from '../../core/services/tipos-permiso-service';
 import { CommonModule } from '@angular/common';
 import { SolicitudesTable } from './solicitudes-table/solicitudes-table';
 import { Card } from '../../shared/components/card/card';
