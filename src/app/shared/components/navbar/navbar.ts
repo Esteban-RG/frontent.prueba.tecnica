@@ -3,11 +3,12 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { NotificationBadge } from "./notification-badge/notification-badge";
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, CommonModule],
+  imports: [RouterLink, RouterLinkActive, CommonModule, NotificationBadge],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })

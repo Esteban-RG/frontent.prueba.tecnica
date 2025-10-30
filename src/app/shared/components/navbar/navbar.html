@@ -38,8 +38,25 @@
             </a>
           </li>
         }
+        @if (isSuper$ | async) {
+          <li class="nav-item">
+            <a routerLink="/adm-turnos" routerLinkActive="active" class="nav-link text-white">
+              Administrar Turnos
+            </a>
+          </li>
+        }
+         @if (isSuper$ | async) {
+          <li class="nav-item">
+            <a routerLink="/adm-usuarios" routerLinkActive="active" class="nav-link text-white">
+              Administrar Usuarios
+            </a>
+          </li>
+        }
       </ul>
       <ul class="navbar-nav">
+        <li class="nav-item">
+          <app-notification-badge></app-notification-badge>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="#">
             {{username$ |  async}}

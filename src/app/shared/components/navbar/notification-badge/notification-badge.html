@@ -1,0 +1,29 @@
+<div class="dropdown nav-item"> 
+    <a class="nav-link dropdown-toggle" 
+     href="#" 
+     role="button" 
+     aria-expanded="isDropdownOpen" 
+     [class.show]="isDropdownOpen"
+     (click)="toggleDropdown(); $event.preventDefault()">
+    
+    <i class="bi bi-bell"></i>
+    <span class="badge rounded-pill bg-danger ms-1" *ngIf="(unreadCount$ | async) as count">
+      {{ count > 0 ? count : '' }}
+    </span>
+  </a>
+
+  <ul class="dropdown-menu dropdown-menu-end" [class.show]="isDropdownOpen">
+    
+    @for (notificacion of notificaciones$ | async; track notificacion.idNotificacion) {
+      <li>
+        <a class="dropdown-item" (click)="atenderNotificacion(notificacion)"> 
+          <strong>{{ notificacion.titulo }}</strong>
+          <small class="d-block text-body-secondary">{{ notificacion.mensaje }}</small>
+        </a>
+      </li>
+    } @empty {
+      <li><span class="dropdown-item-text">No tienes notificaciones nuevas.</span></li>
+    }
+  </ul>
+
+</div>
